@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,14 @@ namespace Calculator
 {
     public partial class Form1 : Form
     {
-        static string result=" ";
+        class Calculator
+        {
+            public List<string> Value = new List<string>();
+
+
+        }
+
+        Calculator calculator = new Calculator();
         public Form1()
         {
             InitializeComponent();
@@ -29,12 +37,13 @@ namespace Calculator
             {
                 if (button.Text == "0")
                 {
-                    textBox.Text += "0";
+                    textBox.Text += "0"; 
+                 
                 }
 
                 if (button.Text == "1")
                 {
-                    textBox.Text = "1";
+                    textBox.Text += "1";
                 }
                 if (button.Text == "2")
                 {
@@ -73,23 +82,55 @@ namespace Calculator
 
         private void buttonClean_Click(object sender, EventArgs e)
         {
-            result = 0;
+
             textBox.Text = String.Empty;
         }
 
         private void buttonPlus_Click(object sender, EventArgs e)
         {
-            
-       
-            
-            
-        }
+         
+            if (sender is Button button)
+            {
+                if (button.Text == "+")
+                {
+                    textBox.Text += " + ";
+                }
+            }
 
+
+        }
+        private void buttonMultiply_Click(object sender, EventArgs e)
+        {
+            if (sender is Button button)
+            {
+
+
+                if (button.Text == "x")
+                {
+                    textBox.Text += " * ";
+                }
+
+            }
+        }
         private void buttonEqual_Click(object sender, EventArgs e)
         {
-            textBox.Text = Convert.ToString(result); 
+            int result = 0;
+           var arrayValue=   textBox.Text.Split(' ');
 
-            
+           foreach (var VARIABLE in arrayValue)
+           {
+               calculator.Value.Add(VARIABLE.ToString());
+           }
+
+           if (arrayValue[1]=="+")
+           {
+               result = Convert.ToInt32(arrayValue[0]) + Convert.ToInt32(arrayValue[2]);
+           }
+
+           textBox.Text = result.ToString();
+
         }
+
+        
     }
 }
